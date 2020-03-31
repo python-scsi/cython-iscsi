@@ -4,7 +4,8 @@ Cython-based wrapper for [libiscsi](https://github.com/sahlberg/libiscsi).
 
 ## Prerequisites
 
-This module depends on [libiscsi](https://github.com/sahlberg/libiscsi). You must first install the library before you can build this module.
+This module depends on [libiscsi](https://github.com/sahlberg/libiscsi) (version 1.13 or
+later). You must first install the library before you can build this module.
 
 In Debian-compatible distributions, you can do so:
 
