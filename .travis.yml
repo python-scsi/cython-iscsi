@@ -16,4 +16,5 @@ install:
   - pip install .[dev]
 
 script:
+  - pytest
   - if [[ $PRE_COMMIT ]]; then pre-commit install; pre-commit run --all-files; fi

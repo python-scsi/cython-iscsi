@@ -20,6 +20,7 @@ setup(
             "Cython",
             "mypy",
             "pre-commit",
+            "pytest",
             "setuptools>=42",
             "setuptools_scm[toml]>=3.4",
             "wheel",
