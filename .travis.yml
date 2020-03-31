@@ -15,6 +15,11 @@ matrix:
 install:
   - pip install .[dev]
 
+addons:
+  apt:
+    packages:
+      - libiscsi-dev
+
 script:
   - pytest
   - if [[ $PRE_COMMIT ]]; then pre-commit install; pre-commit run --all-files; fi
