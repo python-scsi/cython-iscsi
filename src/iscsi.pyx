@@ -79,6 +79,8 @@ cdef class Task:
             const unsigned char [::1] cdb,
             scsi_xfer_dir direction,
             size_t xferlen):
+        if cdb is None or len(cdb) == 0:
+            raise ValueError("Empty CDB when creating task.")
         self._task = scsi_create_task(len(cdb), &cdb[0], direction, xferlen)
 
     @property

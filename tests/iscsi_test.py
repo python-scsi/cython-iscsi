@@ -29,3 +29,7 @@ class TaskTest(unittest.TestCase):
             bytearray(b"\x12\x00\x00\x00\x60\x00"), iscsi.SCSI_XFER_READ, 96
         )
         self.assertIsNotNone(task)
+
+    def test_empty_cdb(self):
+        with self.assertRaises(ValueError):
+            iscsi.Task(None, iscsi.SCSI_XFER_READ, 96)
