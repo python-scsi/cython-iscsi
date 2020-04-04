@@ -73,15 +73,9 @@ cdef extern from "iscsi/iscsi.h":
 
 cdef class Task:
     cdef scsi_task *_task
-    cdef bint _has_datain
-    cdef unsigned char[:] _datain_view
-    cdef bint _has_dataout
-    cdef unsigned char[:] _dataout_view
 
     def __init__(self, bytes cdb, scsi_xfer_dir direction, size_t xferlen):
         self._task = scsi_create_task(len(cdb), cdb, direction, xferlen)
-        self._has_datain = False
-        self._has_dataout = False
 
     @property
     def status(self):
