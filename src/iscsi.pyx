@@ -63,8 +63,8 @@ cdef extern from "iscsi/iscsi.h":
     cdef int iscsi_full_connect_sync(iscsi_context *iscsi, const char *portal, int lun)
     cdef int iscsi_disconnect(iscsi_context *iscsi)
 
-    cdef scsi_task_add_data_in_buffer(scsi_task *task, int len, unsigned char *buf)
-    cdef scsi_task_add_data_out_buffer(scsi_task *task, int len, unsigned char *buf)
+    cdef int scsi_task_add_data_in_buffer(scsi_task *task, int len, unsigned char *buf)
+    cdef int scsi_task_add_data_out_buffer(scsi_task *task, int len, unsigned char *buf)
 
     cdef scsi_task *iscsi_scsi_command_sync(
         iscsi_context *iscsi, int lun, scsi_task *task, iscsi_data *data)
@@ -121,10 +121,12 @@ cdef class Context:
         cdef unsigned char[:] data_out_view = data_out
         cdef unsigned char[:] data_in_view = data_in
 
-        if len(data_out):
-            scsi_task_add_data_out_buffer(task._task, len(data_out), &data_out_view[0])
-        if len(data_in):
-            scsi_task_add_data_in_buffer(task._task, len(data_in), &data_in_view[0])
+        if data_out is not None and len(data_out):
+            if scsi_task_add_data_out_buffer(task._task, len(data_out), &data_out_view[0]) < 0:
+                raise ValueError("Invalid data_out argument.")
+        if data_in is not None and len(data_in):
+            if scsi_task_add_data_in_buffer(task._task, len(data_in), &data_in_view[0]) < 0:
+                raise ValueError("Invalid data_in argument.")
 
         iscsi_scsi_command_sync(self._ctx, lun, task._task, NULL)
 
