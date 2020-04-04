@@ -74,8 +74,12 @@ cdef extern from "iscsi/iscsi.h":
 cdef class Task:
     cdef scsi_task *_task
 
-    def __init__(self, bytes cdb, scsi_xfer_dir direction, size_t xferlen):
-        self._task = scsi_create_task(len(cdb), cdb, direction, xferlen)
+    def __init__(
+            self,
+            const unsigned char [::1] cdb,
+            scsi_xfer_dir direction,
+            size_t xferlen):
+        self._task = scsi_create_task(len(cdb), &cdb[0], direction, xferlen)
 
     @property
     def status(self):
