@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2014 The cython-iscsi Authors
+
+SPDX-License-Identifier: LGPL-2.1-or-later
+-->
+
 # cython-iscsi
 
 Cython-based wrapper for [libiscsi](https://github.com/sahlberg/libiscsi).

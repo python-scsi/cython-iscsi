@@ -1,5 +1,6 @@
-# SPDX-FileCopyrightText: © 2014 The cython-iscsi Authors
-# SPDX-License-Identifier: LGPL-2.1+
+# SPDX-FileCopyrightText: 2014 The cython-iscsi Authors
+#
+# SPDX-License-Identifier: LGPL-2.1-or-later
 
 import unittest
 

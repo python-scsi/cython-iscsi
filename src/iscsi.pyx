@@ -1,7 +1,8 @@
 # cython: language_level=3
+
+# SPDX-FileCopyrightText: 2014 The cython-iscsi Authors
 #
-# SPDX-FileCopyrightText: © 2014 The cython-iscsi Authors
-# SPDX-License-Identifier: LGPL-2.1+
+# SPDX-License-Identifier: LGPL-2.1-or-later
 
 from libc.stdlib cimport calloc
 
