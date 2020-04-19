@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
+# SPDX-FileCopyrightText: 2020 The cython-iscsi Authors
 #
-# SPDX-FileCopyrightText: © 2020 The cython-iscsi Authors
-# SPDX-License-Identifier: LGPL-2.1+
+# SPDX-License-Identifier: LGPL-2.1-or-later
 
 from setuptools import Extension, find_packages, setup
 
