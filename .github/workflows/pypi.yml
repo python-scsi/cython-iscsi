@@ -17,6 +17,9 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.x
+    - name: Install APT dependencies
+      run: |
+        sudo apt install libiscsi-dev
     - name: Install pypa/build
       run: |
         pip install build
