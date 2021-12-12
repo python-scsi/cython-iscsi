@@ -6,6 +6,7 @@
 
 from libc.stdlib cimport calloc
 
+
 cdef extern from "iscsi/scsi-lowlevel.h":
     cpdef enum scsi_xfer_dir:
         SCSI_XFER_NONE

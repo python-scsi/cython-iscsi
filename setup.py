@@ -2,11 +2,10 @@
 #
 # SPDX-License-Identifier: LGPL-2.1-or-later
 
-from setuptools import Extension, setup
-
 import pkgconfig
 import setuptools_scm  # noqa: F401  # Ensure it's present.
 from Cython.Build import cythonize
+from setuptools import Extension, setup
 
 if not pkgconfig.installed("libiscsi", ">=1.13"):
     raise Exception(
