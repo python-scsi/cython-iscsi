@@ -13,11 +13,31 @@ cdef extern from "iscsi/scsi-lowlevel.h":
         SCSI_XFER_READ
         SCSI_XFER_WRITE
 
+    cpdef enum scsi_sense_key:
+        SCSI_SENSE_NO_SENSE
+        SCSI_SENSE_RECOVERED_ERROR
+        SCSI_SENSE_NOT_READY
+        SCSI_SENSE_MEDIUM_ERROR
+        SCSI_SENSE_HARDWARE_ERROR
+        SCSI_SENSE_ILLEGAL_REQUEST
+        SCSI_SENSE_UNIT_ATTENTION
+        SCSI_SENSE_DATA_PROTECTION
+        SCSI_SENSE_BLANK_CHECK
+        SCSI_SENSE_VENDOR_SPECIFIC
+        SCSI_SENSE_COPY_ABORTED
+        SCSI_SENSE_COMMAND_ABORTED
+        SCSI_SENSE_OBSOLETE_ERROR_CODE
+        SCSI_SENSE_OVERFLOW_COMMAND
+        SCSI_SENSE_MISCOMPARE
+
     cdef struct scsi_task:
         pass
 
     cdef struct scsi_sense:
-        pass
+        # The following are present in libiscsi 1.13.0
+        unsigned char       error_type
+        int                 key
+        int                 ascq
 
     scsi_task *scsi_create_task(
         int cdb_size, unsigned char *cdb, int xfer_dir, int expxferlen)
@@ -88,6 +108,12 @@ cdef class Task:
     @property
     def status(self):
         return scsi_task_get_status(self._task, NULL)
+
+    @property
+    def sense(self):
+        cdef scsi_sense sense_data
+        scsi_task_get_status(self._task, &sense_data)
+        return sense_data
 
 
 cdef class Context:
