@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 
 from libc.stdlib cimport calloc
+from cpython.bytes cimport PyBytes_FromStringAndSize
 
 
 cdef extern from "iscsi/scsi-lowlevel.h":
@@ -13,8 +14,12 @@ cdef extern from "iscsi/scsi-lowlevel.h":
         SCSI_XFER_READ
         SCSI_XFER_WRITE
 
+    cdef struct scsi_data:
+        int size
+        char *data
+
     cdef struct scsi_task:
-        pass
+        scsi_data datain
 
     cdef struct scsi_sense:
         pass
@@ -89,6 +94,9 @@ cdef class Task:
     def status(self):
         return scsi_task_get_status(self._task, NULL)
 
+    @property
+    def raw_sense(self):
+        return PyBytes_FromStringAndSize(&self._task.datain.data[2], self._task.datain.size-2)
 
 cdef class Context:
     cdef iscsi_context *_ctx
