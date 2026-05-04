@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 
 from cpython.bytes cimport PyBytes_FromStringAndSize
+from libc.stdint cimport uint32_t
 from libc.stdlib cimport calloc
 
 
@@ -91,6 +92,8 @@ cdef extern from "iscsi/iscsi.h":
     cdef iscsi_discovery_address *iscsi_discovery_sync(iscsi_context *iscsi)
     cdef void iscsi_free_discovery_data(iscsi_context *iscsi, iscsi_discovery_address *da)
 
+    cdef int iscsi_task_mgmt_lun_reset_sync(iscsi_context *iscsi, uint32_t lun)
+
 cdef class Task:
     cdef scsi_task *_task
 
@@ -146,6 +149,10 @@ cdef class Context:
     def disconnect(self):
         if iscsi_disconnect(self._ctx) < 0:
             raise RuntimeError("Disconnection error.")
+
+    def lun_reset(self, int lun):
+        if iscsi_task_mgmt_lun_reset_sync(self._ctx, lun) < 0:
+            raise RuntimeError("LUN RESET failed for lun %d" % lun)
 
     def command(self, int lun, Task task, bytearray data_out, bytearray data_in):
         # Get the data in/out bytearrays here so that Python can't change them.
