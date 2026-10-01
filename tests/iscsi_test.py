@@ -19,6 +19,11 @@ class ContextTest(unittest.TestCase):
         context.set_targetname("my-target")
         context.set_header_digest(iscsi.iscsi_header_digest.ISCSI_HEADER_DIGEST_NONE)
 
+    def test_set_isid(self):
+        context = iscsi.Context("foobar")
+        context.set_isid_oui(0x001405, 0x0)
+        context.set_isid_en(0x001405, 0x0)
+
     def test_command(self):
         context = iscsi.Context("foobar")
         task = iscsi.Task(
