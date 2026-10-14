@@ -2,12 +2,19 @@
 #
 # SPDX-License-Identifier: MIT
 
+queue_rules:
+    - name: default
+      merge_method: rebase
+      queue_conditions:
+        - "#approved-reviews-by >= 1"
+      merge_conditions:
+        - status-success = Travis CI - Pull Request
+        - check-success = pre-commit
+
 pull_request_rules:
-  - name: Automatic merge on approval
-    conditions:
-      - "#approved-reviews-by>=1"
-      - "status-success=Travis CI - Pull Request"
-      - "status-success=pre-commit"
-    actions:
-      merge:
-        method: rebase
+    - name: Automatic queue on approval
+      conditions:
+        - "#approved-reviews-by >= 1"
+      actions:
+        queue:
+          name: default
